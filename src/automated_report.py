@@ -1,4 +1,7 @@
-\documentclass[12 pt, a4paper, notitlepage]{scrreprt}
+def generate_report(coordinates, area):
+
+    with open("../reporting/report.tex", "w") as f:
+        f.write(r"""\documentclass[12 pt, a4paper, notitlepage]{scrreprt}
         \usepackage
         {amssymb}
         \usepackage
@@ -76,26 +79,17 @@
         \chapter
         {Potentialanalyse}
 
-
-
-        \begin
-        {figure}
+        \begin{figure}
         \centering
-        \includegraphics[scale = 0.7]{images / Akkumulierter_Ertrag.png}
+        \includegraphics[scale = 0.7]{images/Akkumulierter_Ertrag.png}
         \caption
-        {}\labeln{Projektkosten}
-
+        {}\label{Projektkosten}
         \end
         {figure}
 
-        Und
-        nun
-        zu
-        den
-        Monaten
+        Und nun zu den Monaten
 
-        \begin
-        {figure}
+        \begin{figure}
         \centering
         \includegraphics[scale = 0.7]{images/Stromerzeugung_pro_Monat.png}
         \caption{}
@@ -106,4 +100,4 @@
 
 
         \end
-        {document}
+        {document}""")

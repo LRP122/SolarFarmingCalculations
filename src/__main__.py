@@ -2,6 +2,7 @@ from scraper_base import *
 from analysis import *
 import time
 from multiprocessing import Pool
+from automated_report import generate_report
 
 start_time = time.time()
 
@@ -24,6 +25,8 @@ if __name__ == "__main__":
     df_production = A.monthly_production(df_radiation, df_sunhours, area)
     A.plot_monthly_production(df_production)
     A.yearly_return(df_production)
+
+    generate_report("sd", "sd")
 
 
 

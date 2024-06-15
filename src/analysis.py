@@ -8,6 +8,8 @@ class analysis():
 
         self.energy_price = 0.12
         self.power_module = 0.25
+        self.LCOE = 0.05
+
 
     def get_area(self,zero = [47.2863,11.4729], one = [47.2863,11.4795], two = [47.2891,11.4795], three = [47.2891,11.4729]):
         north_zero = zero[0]
@@ -48,7 +50,7 @@ class analysis():
         Stromerzeugung = []
 
         for i in range(len(Monate)):
-            Stromerzeugung.append((Sonnenstunden[i] * area) * self.power_module * 0.3)
+            Stromerzeugung.append((Sonnenstunden[i] * area) * self.power_module * 0.3 * 30)
         
         df = pd.DataFrame({"Monate": Monate, "Stromerzeugung": Stromerzeugung})
         
@@ -72,16 +74,17 @@ class analysis():
 
     def yearly_return(self, df):
 
-        returns = df["Stromerzeugung"].sum() * self.energy_price
+        returns = df["Stromerzeugung"].sum() * self.energy_price * 0.1
 
-        cost = 100000
+        cost = df["Stromerzeugung"].sum() * 0.1 * self.LCOE
 
         years = np.arange(2025, 2051)
 
-        accumulated_return = [returns * (1 + 0.02) ** (year - 2024) for year in years]
+        accumulated_return = [returns * (1 + 0.02) * (year - 2024) for year in years]
+        accumulated_cost = [3000 * (1 + 0.02) * (year - 2024) + 50_000 for year in years]
 
         plt.plot(years, accumulated_return ,color="blue", marker="o", linestyle="--", linewidth=2, markersize=10)
-        plt.axhline(y=cost, color="red", linestyle="--", linewidth=2)
+        plt.plot(years, accumulated_cost, color="red", marker="o", linestyle="--", linewidth=2, markersize=10)
         plt.xlabel("Jahre")
         plt.ylabel("[€]")
         plt.title("Akkumulierter Ertrag in €")
