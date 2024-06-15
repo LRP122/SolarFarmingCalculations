@@ -17,16 +17,13 @@ if __name__ == "__main__":
         df_radiation = Radiation.get()  # get the return value from field_data_radiation
         df_sunhours = Sunhours.get()  # get the return value from field_data_sunhours
 
-    print(df_radiation)
-    print(df_sunhours)
-
     A = analysis()
     area = A.get_area()
     df_production = A.monthly_production(df_radiation, df_sunhours, area)
     A.plot_monthly_production(df_production)
-    A.yearly_return(df_production)
+    A.yearly_return(df_production,area)
 
-    generate_report("sd", "sd")
+    generate_report(area)
 
 
 

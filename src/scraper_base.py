@@ -68,7 +68,7 @@ class webscraper():
 
                 actions = ActionChains(driver)
                 actions.move_to_element_with_offset(driver.find_element(By.TAG_NAME, 'body'), 0, 0)
-                actions.move_by_offset(x_offset, -4 * y_offset).click().perform()
+                actions.move_by_offset(x_offset, -1.5 * y_offset).click().perform()
 
                 element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, '//tr[td="Solarstrahlung Jahr"]/td[2]'))
@@ -106,9 +106,6 @@ class webscraper():
         averageSommer = round(df_radiation["Strahlung Sommer"].mean(),1)
         averageWinter = round(df_radiation["Strahlung Winter"].mean(),1)
 
-        print(f"Strahlung im Jahr etwa {averageJahr}kWh/m\n"
-              f"Strahlung im Sommer etwa {averageSommer}kWh/m\n"
-              f"Strahlung im Winter etwa {averageWinter}kWh/m\n")
 
         return df_radiation
 
@@ -162,7 +159,7 @@ class webscraper():
 
                 actions = ActionChains(driver)
                 actions.move_to_element_with_offset(driver.find_element(By.TAG_NAME, 'body'), 0, 0)
-                actions.move_by_offset(x_offset, -4 * y_offset).click().perform()
+                actions.move_by_offset(x_offset, -1.5 * y_offset).click().perform()
 
                 element = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.XPATH, '//tr[td="Sonnenscheindauer Jahr"]/td[2]'))

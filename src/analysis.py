@@ -6,12 +6,12 @@ class analysis():
 
     def __init__(self):
 
-        self.energy_price = 0.12
-        self.power_module = 0.25
-        self.LCOE = 0.05
+        self.energy_price = 0.1
+        self.power_module = 0.3
+        self.LCOE = 0.01
+        self.price_per_W = 1.0
 
-
-    def get_area(self,zero = [47.2863,11.4729], one = [47.2863,11.4795], two = [47.2891,11.4795], three = [47.2891,11.4729]):
+    def get_area(self,zero = [47.2863,11.4729], one = [47.2863,11.4740], two = [47.2873,11.4740], three = [47.2873,11.4729]):
         north_zero = zero[0]
         east_zero = zero[1]
         north_one = one[0]
@@ -25,8 +25,6 @@ class analysis():
         dist_east = 70000
 
         area = abs(((north_one - north_three) * dist_north)  * ((east_one - east_zero) * dist_east))
-        print(f"Die Fläche beträgt {area} m²")
-        print(f"Die Fläche beträgt {area / 10000} ha")
         return area
 
     # Stromerzeugung pro Monat in kWh als barchart
@@ -53,7 +51,7 @@ class analysis():
             Stromerzeugung.append((Sonnenstunden[i] * area) * self.power_module * 0.3 * 30)
         
         df = pd.DataFrame({"Monate": Monate, "Stromerzeugung": Stromerzeugung})
-        
+
         return df
     
     def plot_monthly_production(self, df):
@@ -65,29 +63,33 @@ class analysis():
         plt.ticklabel_format(style="plain")
         plt.bar(Monate, Stromerzeugung, color=colors, edgecolor="black", linewidth=2, alpha=0.7, capsize=5)
 
-        plt.xlabel("Monate")
+        plt.xlabel("Months")
         plt.ylabel("[kWh]")
-        plt.title("Stromerzeugung pro Monat in Mio. kWh")
+        plt.title("Energy Production per Month in kWh")
 
         plt.savefig("../reporting/images/Stromerzeugung_pro_Monat.png", dpi=600)
         plt.clf()
 
-    def yearly_return(self, df):
+    def yearly_return(self, df,area):
 
-        returns = df["Stromerzeugung"].sum() * self.energy_price * 0.1
+        returns = df["Stromerzeugung"].mean() * self.energy_price * 0.3 * 12
 
-        cost = df["Stromerzeugung"].sum() * 0.1 * self.LCOE
+
+        cost = area * self.power_module * 1000 * self.price_per_W * 0.3
+
 
         years = np.arange(2025, 2051)
 
         accumulated_return = [returns * (1 + 0.02) * (year - 2024) for year in years]
-        accumulated_cost = [3000 * (1 + 0.02) * (year - 2024) + 50_000 for year in years]
 
-        plt.plot(years, accumulated_return ,color="blue", marker="o", linestyle="--", linewidth=2, markersize=10)
-        plt.plot(years, accumulated_cost, color="red", marker="o", linestyle="--", linewidth=2, markersize=10)
-        plt.xlabel("Jahre")
+        accumulated_cost = [cost  for year in years]
+
+        plt.plot(years, accumulated_return ,color="blue", label="Accumulated Return")
+        plt.plot(years, accumulated_cost, color="red", label="Accumulated Cost")
+        plt.xlabel("Year")
         plt.ylabel("[€]")
-        plt.title("Akkumulierter Ertrag in €")
+        plt.title("Accumulated Return and Cost of the Project")
+        plt.legend()
 
         plt.savefig("../reporting/images/Akkumulierter_Ertrag.png", dpi=600)
 

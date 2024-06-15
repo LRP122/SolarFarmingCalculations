@@ -1,7 +1,7 @@
-def generate_report(coordinates, area):
+def generate_report(area, zero = [47.2863, 11.4729], one = [47.2863, 11.4740], two = [47.2873, 11.4740], three = [47.2873, 11.4729]):
 
     with open("../reporting/report.tex", "w") as f:
-        f.write(r"""\documentclass[12 pt, a4paper, notitlepage]{scrreprt}
+        f.write(r"""\documentclass[12pt, a4paper, notitlepage]{scrreprt}
         \usepackage
         {amssymb}
         \usepackage
@@ -44,13 +44,10 @@ def generate_report(coordinates, area):
         {\uline}{\ul}{}
         \usepackage[table, xcdraw]
         {xcolor}
-
-        \titlehead
-        {\includegraphics[width = 5cm]{logo.jpg}}
         \title
         {\centering Solarpotential Agrivoltaics Bericht}
         \author
-        {Luis Reitmeier\thanks {\href {mailto: reitmeierluis @ icloud.com} {reitmeierluis @ icloud.com}}}
+        {Luis Reitmeier\thanks {\href {mailto: reitmeierluis@icloud.com} {reitmeierluis@icloud.com}}}
         \date{\today}
 
         \begin
@@ -64,35 +61,45 @@ def generate_report(coordinates, area):
 
         \vfill
         \section * {Abstract}
-        \thispagestyle
-        {empty}
-
-        \tableofcontents
-
-        \thispagestyle
-        {empty}
-        \cleardoublepage
+        The following report is a detailed analysis of the solar potential of the coordinates from North """ + f"{str(round(zero[0],2))} to {str(round(two[0],2))} and east {str(round(zero[1],2))} to {str(round(one[1],2))} with a total area of {str(round(area/10000,2))} ha" + r"""
+        . Figures and calculations are presented to give a comprehensive overview of the solar potential and economic potential of the area.
+        
         \pagenumbering
         {arabic}
         \newpage
 
         \chapter
-        {Potentialanalyse}
+        {Assumptions}
+        
+        In order to simplify the calculations for a first estimation, the following assumptions were made. These assumptions are based on 
+        the current market conditions in Tyrol.
+        
+        \begin{itemize}
+        \item 30 percent of the area is covered with solar panels
+        \item The solar panels have an peak power of 300 W/m²
+        \item On a given day, the solar panels can use about 30 percent of the sunhours for energy production with peak power
+        \item The energy selling price is 10ct/kWh. This price is assumed to increase by 3% annually.
+        \item The initial build cost of the solar farm is 1€/Watt
+        
+        \end{itemize}
+        
+        With these assumptions, we can create a generall overview of the economic potential of the solar farm.
+        In coming reports, the use of energy storage and the impact of government subsidies will be included in the calculations.
+        Energy storage is especially interesting for on side use and for using higher prices when selling to the grid.
 
         \begin{figure}
         \centering
         \includegraphics[scale = 0.7]{images/Akkumulierter_Ertrag.png}
-        \caption
-        {}\label{Projektkosten}
+        \caption {The graphic shows the accumulated cost and return of the project on the given coordinates on a timeframe of 25 years, from 2025 to 2050. The red line indicates the initial build cost,
+        including planning, material and construction.}\label{Projektkosten}
         \end
         {figure}
 
-        Und nun zu den Monaten
 
         \begin{figure}
         \centering
         \includegraphics[scale = 0.7]{images/Stromerzeugung_pro_Monat.png}
-        \caption{}
+        \caption{This graphic shows the monthly energy production of the solar farm on the given coordinates. The energy production is measured in kWh and is calculated for a timeframe of 30 days.}\label{Stromerzeugung}
         \label{Stromerzeugung}
         \end
         {figure}
