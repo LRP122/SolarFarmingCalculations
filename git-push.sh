@@ -2,5 +2,5 @@
 set -euo pipefail
 
 git add .
-git commit -m "Added interactive reporting."
+git commit -m "Updateded docs and requirements.txt"
 git push
