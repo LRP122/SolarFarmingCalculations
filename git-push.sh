@@ -2,5 +2,5 @@
 set -euo pipefail
 
 git add .
-git commit -m "New files and fun stuff"
+git commit -m "Added interactive reporting."
 git push
