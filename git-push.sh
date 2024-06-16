@@ -2,5 +2,5 @@
 set -euo pipefail
 
 git add .
-git commit -m "Updateded docs and requirements.txt"
+git commit -m "$1"
 git push

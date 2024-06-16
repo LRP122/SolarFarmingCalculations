@@ -40,3 +40,5 @@ The project is still in the early stages of development. The following increment
 1. Add a user interface to make it easier for users to input their farm coordinates.
 2. Add possibility for different types of farms, agriculture, and solar panels to create more individualized reports.
 3. Deploy the project as a web application to make it more accessible to users.
+
+Dockerfile is a WIP.
